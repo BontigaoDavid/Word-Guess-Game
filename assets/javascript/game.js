@@ -150,5 +150,3 @@ function win() {
     winCount++;
     updateWins();
 }
-
-console.log("test");
