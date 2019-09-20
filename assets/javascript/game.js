@@ -1,3 +1,5 @@
+var gameOn = false;
+var gameIsRunning = false;
 var words = ["helloworld", "computer", "javascript", "southernmethodistuniversity", "programming", "computerscience"];
 var word;
 var wordContainer = document.getElementById("wordContainer");
@@ -6,6 +8,7 @@ var guessesContainer = document.getElementById("guessesContainer");
 var guesses = [];
 var wordPrompt = [];
 var triesLeft = 10;
+
 
 function selectNewWord() {
     randomNumber = Math.floor(Math.random()*(words.length));
@@ -72,33 +75,33 @@ function guessLetter(l) {
 }
 
 document.onkeyup = function (event) {
-    if (
-        event.key == "q" ||
-        event.key == "w" ||
-        event.key == "e" ||
-        event.key == "r" ||
-        event.key == "t" ||
-        event.key == "y" ||
-        event.key == "u" ||
-        event.key == "i" ||
-        event.key == "o" ||
-        event.key == "p" ||
-        event.key == "a" ||
-        event.key == "s" ||
-        event.key == "d" ||
-        event.key == "f" ||
-        event.key == "g" ||
-        event.key == "h" ||
-        event.key == "j" ||
-        event.key == "k" ||
-        event.key == "l" ||
-        event.key == "z" ||
-        event.key == "x" ||
-        event.key == "c" ||
-        event.key == "v" ||
-        event.key == "b" ||
-        event.key == "n" ||
-        event.key == "m"         
+    if (gameIsRunning &&
+            (event.key == "q" ||
+            event.key == "w" ||
+            event.key == "e" ||
+            event.key == "r" ||
+            event.key == "t" ||
+            event.key == "y" ||
+            event.key == "u" ||
+            event.key == "i" ||
+            event.key == "o" ||
+            event.key == "p" ||
+            event.key == "a" ||
+            event.key == "s" ||
+            event.key == "d" ||
+            event.key == "f" ||
+            event.key == "g" ||
+            event.key == "h" ||
+            event.key == "j" ||
+            event.key == "k" ||
+            event.key == "l" ||
+            event.key == "z" ||
+            event.key == "x" ||
+            event.key == "c" ||
+            event.key == "v" ||
+            event.key == "b" ||
+            event.key == "n" ||
+            event.key == "m")         
     )
     guessLetter(event.key);
 } 
@@ -123,7 +126,19 @@ function resetGame() {
     setTriesContainer();
 }
 
-selectNewWord();
-resetWordPrompt();
-updateWordContainer();
-setTriesContainer();
+function startGame() {
+    selectNewWord();
+    resetWordPrompt();
+    resetWordContainer();
+    updateWordContainer();
+    setTriesContainer();
+    gameIsRunning = true;
+}
+
+document.onkeydown = function (e) {
+    if (gameOn == false)
+    {
+        startGame();
+        gameOn = true;   
+    } 
+}
