@@ -5,10 +5,11 @@ var word;
 var wordContainer = document.getElementById("wordContainer");
 var triesContainer = document.getElementById("triesContainer");
 var guessesContainer = document.getElementById("guessesContainer");
+var winsContainer = document.getElementById("winsContainer");
 var guesses = [];
 var wordPrompt = [];
 var triesLeft = 10;
-
+var winCount = 0;
 
 function selectNewWord() {
     randomNumber = Math.floor(Math.random()*(words.length));
@@ -57,6 +58,7 @@ function guessLetter(l) {
 
             //check for win
             if(wordPrompt.indexOf("_") == -1) {
+                win();
                 resetGame();
             }
         }
@@ -75,7 +77,8 @@ function guessLetter(l) {
 }
 
 document.onkeyup = function (event) {
-    if (gameIsRunning &&
+    if (gameIsRunning) {
+        if (gameIsRunning &&
             (event.key == "q" ||
             event.key == "w" ||
             event.key == "e" ||
@@ -101,9 +104,12 @@ document.onkeyup = function (event) {
             event.key == "v" ||
             event.key == "b" ||
             event.key == "n" ||
-            event.key == "m")         
-    )
-    guessLetter(event.key);
+            event.key == "m"))
+        guessLetter(event.key);
+    }
+    else {
+        startGame();
+    }
 } 
 
 function updateGuessContainer(l) {
@@ -132,13 +138,14 @@ function startGame() {
     resetWordContainer();
     updateWordContainer();
     setTriesContainer();
+    updateWins();
     gameIsRunning = true;
 }
 
-document.onkeydown = function (e) {
-    if (gameOn == false)
-    {
-        startGame();
-        gameOn = true;   
-    } 
+function updateWins() {
+    winsContainer.textContent = "Wins: " + winCount;
+}
+function win() {
+    winCount++;
+    updateWins();
 }
