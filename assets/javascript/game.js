@@ -14,6 +14,7 @@ var winCount = 0;
 function selectNewWord() {
     randomNumber = Math.floor(Math.random()*(words.length));
     word = words[randomNumber];
+    console.log("word is " + word);
 }
 
 function resetWordPrompt() {
@@ -76,7 +77,7 @@ function guessLetter(l) {
     }
 }
 
-document.onkeyup = function (event) {
+document.onkeydown = function (event) {
     if (gameIsRunning) {
         if (gameIsRunning &&
             (event.key == "q" ||
